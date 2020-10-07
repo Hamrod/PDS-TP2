@@ -1,5 +1,6 @@
 package TP2;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 
@@ -16,7 +17,8 @@ public class Main {
       CharStream input;
       if(args.length == 0) {
         // From standard input
-        input = CharStreams.fromStream(System.in);
+        //input = CharStreams.fromStream(System.in);
+        input = CharStreams.fromPath(Paths.get("D:\\Mes Documents\\PDS\\TP2\\tests\\Perso\\add.vsl"));
       }
       else {
         // From file set in first argument
@@ -43,7 +45,7 @@ public class Main {
         // Output LLVM IR
         System.out.println(ir);
       } catch(TypeException e) {
-        e.printStackTrace(); // Useful for developping, not for the ``end users''!
+        e.printStackTrace(); // Useful for developing, not for the ``end users''!
         System.err.println(e.getMessage());
       }
     } catch(IOException e) {
