@@ -2,9 +2,4 @@
 build
 .idea
 /src/main/antlr/VSLLexer.tokens
-/tests/Perso/add
-/tests/Perso/add.ll
-/tests/Perso/sub
-/tests/Perso/sub.ll
-/tests/Perso/subAdd
-/tests/Perso/subAdd.ll
+*.ll
