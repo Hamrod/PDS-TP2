@@ -19,19 +19,20 @@ program returns [TP2.ASD.Program out]
     : e=expression EOF { $out = new TP2.ASD.Program($e.out); } // TODO : change when you extend the language
     ;
 
-expression returns [TP2.ASD.Expression out]
-    : l=factor PLUS r=expression  { $out = new TP2.ASD.AddExpression($l.out, $r.out); }
-    | l=factor MINUS r=expression  { $out = new TP2.ASD.SubExpression($l.out, $r.out); }
+expression returns [TP2.ASD.Expr.Expression out]
+    : l=factor PLUS r=expression  { $out = new TP2.ASD.Expr.AddExpression($l.out, $r.out); }
+    | l=factor MINUS r=expression  { $out = new TP2.ASD.Expr.SubExpression($l.out, $r.out); }
+    | l=factor TIMES r=expression  { $out = new TP2.ASD.Expr.MulExpression($l.out, $r.out); }
     | f=factor { $out = $f.out; }
     // TODO : that's all?
     ;
 
-factor returns [TP2.ASD.Expression out]
+factor returns [TP2.ASD.Expr.Expression out]
     : p=primary { $out = $p.out; }
     // TODO : that's all?
     ;
 
-primary returns [TP2.ASD.Expression out]
-    : INTEGER { $out = new TP2.ASD.IntegerExpression($INTEGER.int); }
+primary returns [TP2.ASD.Expr.Expression out]
+    : INTEGER { $out = new TP2.ASD.Expr.IntegerExpression($INTEGER.int); }
     // TODO : that's all?
     ;

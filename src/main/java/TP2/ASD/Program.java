@@ -1,5 +1,6 @@
 package TP2.ASD;
 
+import TP2.ASD.Expr.Expression;
 import TP2.Llvm;
 import TP2.TypeException;
 

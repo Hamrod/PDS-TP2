@@ -1,5 +1,6 @@
-package TP2.ASD;
+package TP2.ASD.Expr;
 
+import TP2.ASD.Type;
 import TP2.Llvm;
 import TP2.TypeException;
 
