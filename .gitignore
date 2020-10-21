@@ -3,3 +3,4 @@ build
 .idea
 /src/main/antlr/VSLLexer.tokens
 *.ll
+/src/main/gen/

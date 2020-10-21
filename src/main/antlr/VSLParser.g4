@@ -23,8 +23,8 @@ expression returns [TP2.ASD.Expr.Expression out]
     : l=factor PLUS r=expression  { $out = new TP2.ASD.Expr.AddExpression($l.out, $r.out); }
     | l=factor MINUS r=expression  { $out = new TP2.ASD.Expr.SubExpression($l.out, $r.out); }
     | l=factor TIMES r=expression  { $out = new TP2.ASD.Expr.MulExpression($l.out, $r.out); }
+    | l=factor DIVIDED r=expression  { $out = new TP2.ASD.Expr.DivExpression($l.out, $r.out); }
     | f=factor { $out = $f.out; }
-    // TODO : that's all?
     ;
 
 factor returns [TP2.ASD.Expr.Expression out]
