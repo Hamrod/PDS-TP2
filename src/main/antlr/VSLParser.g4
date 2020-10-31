@@ -17,6 +17,16 @@ options {
 
 program returns [TP2.ASD.Program out]
     : e=expression EOF { $out = new TP2.ASD.Program($e.out); } // TODO : change when you extend the language
+    | function EOF
+    ;
+
+function
+    : FUNC type IDENT LP RP
+    ;
+
+type
+    : INT
+    | VOID
     ;
 
 expression returns [TP2.ASD.Expr.Expression out]
