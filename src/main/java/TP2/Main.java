@@ -17,8 +17,8 @@ public class Main {
       CharStream input;
       if(args.length == 0) {
         // From standard input
-        input = CharStreams.fromStream(System.in);
-        //input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
+        //input = CharStreams.fromStream(System.in);
+        input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
       }
       else {
         // From file set in first argument

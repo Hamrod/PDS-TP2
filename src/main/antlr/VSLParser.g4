@@ -37,6 +37,10 @@ expression returns [TP2.ASD.Expr.Expression out]
     | f=factor { $out = $f.out; }
     ;
 
+affectation
+    : v=IDENT AFFECT r=expression {}
+    ;
+
 factor returns [TP2.ASD.Expr.Expression out]
     : p=primary { $out = $p.out; }
     // TODO : that's all?
