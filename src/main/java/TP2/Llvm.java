@@ -176,5 +176,19 @@ public class Llvm {
     }
   }
 
+  static public class Store extends Instruction {
+    Type type;
+    String var;
+    String value;
+
+    public Store(Type type, String var, String value) {
+      this.type = type;
+      this.var = var;
+      this.value = value;
+    }
+
+    public String toString() { return "store " + type + " " + value + ", " + type + "* " + var + "\n"; }
+  }
+
   // TODO : other instructions
 }

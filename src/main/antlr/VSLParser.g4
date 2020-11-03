@@ -16,8 +16,8 @@ options {
 // TODO : other rules
 
 program returns [TP2.ASD.Program out]
-    : e=expression EOF { $out = new TP2.ASD.Program($e.out); } // TODO : change when you extend the language
-    | function EOF
+    : a=affectation EOF { $out = new TP2.ASD.Program($a.out); }
+    | f=function EOF
     ;
 
 function
@@ -37,13 +37,13 @@ expression returns [TP2.ASD.Expr.Expression out]
     | f=factor { $out = $f.out; }
     ;
 
-affectation
-    : v=IDENT AFFECT r=expression {}
+affectation returns [TP2.ASD.Affectation out]
+    : v=IDENT AFFECT r=expression { $out = new TP2.ASD.Affectation($v.getText(), $r.out); }
     ;
 
 factor returns [TP2.ASD.Expr.Expression out]
     : p=primary { $out = $p.out; }
-    // TODO : that's all?
+    | IDENT
     ;
 
 primary returns [TP2.ASD.Expr.Expression out]
