@@ -21,7 +21,7 @@ program returns [TP2.ASD.Program out]
     ;
 
 function
-    : FUNC type IDENT LP RP
+    : FUNC type IDENT LP RP RB expression LB
     ;
 
 type
