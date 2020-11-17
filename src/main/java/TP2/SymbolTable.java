@@ -36,6 +36,7 @@ public class SymbolTable {
       return o.type.equals(this.type) &&
         o.ident.equals(this.ident);
     }
+
   }
 
   public static class FunctionSymbol extends Symbol {
@@ -106,6 +107,14 @@ public class SymbolTable {
     }
 
     return res; // Either the symbol or null
+  }
+
+  public Type getType(VariableSymbol variableSymbol) {
+    if (variableSymbol != null) {
+      return variableSymbol.type;
+    } else {
+      return null;
+    }
   }
 
   @Override public boolean equals(Object obj) {

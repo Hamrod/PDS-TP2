@@ -82,9 +82,6 @@ public class Llvm {
     }
   }
 
-  // TODO : other types
-
-
   // LLVM IR Instructions
   static public abstract class Instruction {
     public abstract String toString();

@@ -2,6 +2,7 @@ package TP2.ASD;
 
 import TP2.ASD.Expr.Expression;
 import TP2.Llvm;
+import TP2.SymbolTable;
 import TP2.TypeException;
 
 public class Affectation {
@@ -22,6 +23,12 @@ public class Affectation {
     // IR generation
     public Llvm.IR toIR() throws TypeException {
         Expression.RetExpression ret = expr.toIR();
+        Type varType = Program.symbolTable.getType((SymbolTable.VariableSymbol) Program.symbolTable.lookup(var));
+
+
+        /*if(!ret.type.equals(varType)) {
+            throw new TypeException("type mismatch: have " + varType + " and " + ret.type);
+        }*/
 
         Llvm.Instruction store = new Llvm.Store(ret.type.toLlvmType(), var, ret.result);
 
