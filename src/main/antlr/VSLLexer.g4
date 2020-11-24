@@ -36,6 +36,8 @@ RP : ')';
 LB : '{'; //Left curly-bracket
 RB : '}';
 
+V : ',';
+
 PRINT : 'PRINT';
 READ : 'READ';
 

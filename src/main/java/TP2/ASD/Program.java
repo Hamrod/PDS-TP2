@@ -5,23 +5,32 @@ import TP2.Llvm;
 import TP2.SymbolTable;
 import TP2.TypeException;
 
+import java.util.List;
+
 public class Program {
     public static SymbolTable symbolTable;
-    Affectation a;
+    List<Instruction> instructions;
 
-    public Program(Affectation a) {
-        this.a = a;
+    public Program(List<Instruction> i) {
+        this.instructions = i;
         symbolTable = new SymbolTable();
     }
 
     // Pretty-printer
     public String pp() {
-      return a.pp();
+        String s  = "";
+        for (Instruction instruction : instructions) {
+            s += instruction.pp();
+        }
+        return s;
     }
 
     // IR generation
     public Llvm.IR toIR() throws TypeException {
-
-      return a.toIR();
+        Llvm.IR ir = new Llvm.IR(Llvm.empty(), Llvm.empty());
+        for (Instruction instruction : instructions) {
+            ir.append(instruction.toIR());
+        }
+        return ir;
     }
   }

@@ -12,16 +12,28 @@ options {
   import java.util.Arrays;
 }
 
-
-// TODO : other rules
-
 program returns [TP2.ASD.Program out]
-    : a=affectation EOF { $out = new TP2.ASD.Program($a.out); }
-    | f=function EOF
+    : b=block EOF { $out = new TP2.ASD.Program($b.out); }
+    ;
+
+instruction returns [TP2.ASD.Instruction out]
+    : a=affectation { $out = $a.out; }
+    ;
+
+block returns [List<TP2.ASD.Instruction> out]
+    : { $out = new ArrayList<TP2.ASD.Instruction>(); } LB declaration? (i=instruction { $out.add($i.out); })+ RB
     ;
 
 function
-    : FUNC type IDENT LP RP RB expression LB
+    : FUNC type IDENT LP RP RB block LB
+    ;
+
+affectation returns [TP2.ASD.Affectation out]
+    : v=IDENT AFFECT r=expression { $out = new TP2.ASD.Affectation($v.getText(), $r.out); }
+    ;
+
+declaration returns [TP2.ASD.Declaration out]
+    : INT IDENT (V IDENT)+
     ;
 
 type
@@ -35,10 +47,6 @@ expression returns [TP2.ASD.Expr.Expression out]
     | l=factor TIMES r=expression  { $out = new TP2.ASD.Expr.MulExpression($l.out, $r.out); }
     | l=factor DIVIDED r=expression  { $out = new TP2.ASD.Expr.DivExpression($l.out, $r.out); }
     | f=factor { $out = $f.out; }
-    ;
-
-affectation returns [TP2.ASD.Affectation out]
-    : v=IDENT AFFECT r=expression { $out = new TP2.ASD.Affectation($v.getText(), $r.out); }
     ;
 
 factor returns [TP2.ASD.Expr.Expression out]

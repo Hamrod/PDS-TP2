@@ -18,7 +18,11 @@ public class Main {
       if(args.length == 0) {
         // From standard input
         //input = CharStreams.fromStream(System.in);
-        input = CharStreams.fromString("i:=5+7+1-8");
+        input = CharStreams.fromString("" +
+                "{\n" +
+                  "i:=5+7+1-8\n" +
+                  "j:=5+7+1-8\n" +
+                "}");
         //input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
       }
       else {
