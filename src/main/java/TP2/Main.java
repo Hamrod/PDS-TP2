@@ -21,8 +21,11 @@ public class Main {
         input = CharStreams.fromString("" +
                 "{\n" +
                   "INT i, j\n" +
-                  "i:=5+7+1-8\n" +
-                  "j:=5+7+1-8+i\n" +
+                  "i := 1\n" +
+                  "WHILE i\n" +
+                  "DO \n"+
+                    "i:=5+7+1-8\n" +
+                    "j:=5+7+1-8+i\n" +
                 "}");
         //input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
       }

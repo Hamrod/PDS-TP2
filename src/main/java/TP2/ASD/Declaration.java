@@ -1,6 +1,7 @@
 package TP2.ASD;
 
 import TP2.Llvm;
+import TP2.Llvm.*;
 import TP2.SymbolTable;
 import TP2.TypeException;
 
@@ -25,13 +26,13 @@ public class Declaration extends Instruction {
             s += " " + ident + ',';
         }
         s = s.substring(0, s.length() - 1);
-        return s + '\n';
+        return s;
     }
 
     @Override
-    public Llvm.IR toIR() throws TypeException {
+    public IR toIR() throws TypeException {
 
-        Llvm.IR ir = new Llvm.IR(Llvm.empty(), Llvm.empty());
+        IR ir = new IR(Llvm.empty(), Llvm.empty());
 
         if (Program.symbolTable == null) {
             Program.symbolTable = new SymbolTable();
@@ -41,7 +42,7 @@ public class Declaration extends Instruction {
 
         idents.forEach(ident -> {
             Program.symbolTable.add(new VariableSymbol(type, ident));
-            ir.appendCode(new Llvm.Alloca(type.toLlvmType(), ident));
+            ir.appendCode(new Alloca(type.toLlvmType(), ident));
         });
 
         return ir;

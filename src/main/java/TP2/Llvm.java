@@ -223,5 +223,52 @@ public class Llvm {
     }
   }
 
+  static public class BrLabel extends Instruction {
+    String name;
+
+    public BrLabel(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return "br label %" + name + "\n";
+    }
+  }
+
+  static public class BrIf extends Instruction {
+    String condName;
+    String trueLabel;
+    String falseLabel;
+
+    public BrIf(String condName, String trueLabel, String falseLabel) {
+      this.condName = condName;
+      this.trueLabel = trueLabel;
+      this.falseLabel = falseLabel;
+    }
+
+    @Override
+    public String toString() {
+      return "br i1 " + condName + ", label %" + trueLabel + ", label %" + falseLabel + "\n";
+    }
+  }
+
+  static public class Label extends Instruction {
+    static public int number = 0;
+
+    String name;
+
+    public Label(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public String toString() {
+      return "\n" + name + ":\n";
+    }
+  }
+
+
+
   // TODO : other instructions
 }

@@ -1,6 +1,6 @@
 package TP2.ASD;
 
-import TP2.ASD.Expr.Expression;
+import TP2.Llvm.*;
 import TP2.Llvm;
 import TP2.SymbolTable;
 import TP2.TypeException;
@@ -19,14 +19,14 @@ public class Program {
     public String pp() {
         StringBuilder s  = new StringBuilder();
         for (Instruction instruction : instructions) {
-            s.append(instruction.pp());
+            s.append(instruction.pp()).append('\n');
         }
         return s.toString();
     }
 
     // IR generation
-    public Llvm.IR toIR() throws TypeException {
-        Llvm.IR ir = new Llvm.IR(Llvm.empty(), Llvm.empty());
+    public IR toIR() throws TypeException {
+        IR ir = new IR(Llvm.empty(), Llvm.empty());
         for (Instruction instruction : instructions) {
             ir.append(instruction.toIR());
         }
