@@ -51,7 +51,7 @@ expression returns [TP2.ASD.Expr.Expression out]
 
 factor returns [TP2.ASD.Expr.Expression out]
     : p=primary { $out = $p.out; }
-    | IDENT
+    | i=IDENT { $out = new TP2.ASD.Expr.VarExpression(new TP2.ASD.Int(), $i.getText()); }
     ;
 
 primary returns [TP2.ASD.Expr.Expression out]

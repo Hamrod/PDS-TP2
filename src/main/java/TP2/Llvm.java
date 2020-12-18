@@ -206,5 +206,22 @@ public class Llvm {
     }
   }
 
+  static public class Load extends Instruction {
+    Type type;
+    String var;
+    String lvalue;
+
+    public Load(Type type, String var, String lvalue) {
+      this.type = type;
+      this.var = var;
+      this.lvalue = lvalue;
+    }
+
+    @Override
+    public String toString() {
+      return lvalue + " = load " + type + ", " + type + "* %" + var + "\n";
+    }
+  }
+
   // TODO : other instructions
 }

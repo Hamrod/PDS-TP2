@@ -22,7 +22,7 @@ public class Main {
                 "{\n" +
                   "INT i, j\n" +
                   "i:=5+7+1-8\n" +
-                  "j:=5+7+1-8\n" +
+                  "j:=5+7+1-8+i\n" +
                 "}");
         //input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
       }
