@@ -1,9 +1,12 @@
 package TP2.ASD;
 
 import TP2.Llvm;
+import TP2.SymbolTable;
 import TP2.TypeException;
 
 import java.util.List;
+
+import static TP2.SymbolTable.*;
 
 public class Declaration extends Instruction {
 
@@ -19,14 +22,28 @@ public class Declaration extends Instruction {
     public String pp() {
         String s = type.pp();
         for (String ident : idents) {
-            s += " " + ident + ",";
+            s += " " + ident + ',';
         }
         s = s.substring(0, s.length() - 1);
-        return s;
+        return s + '\n';
     }
 
     @Override
     public Llvm.IR toIR() throws TypeException {
-        return null;
+
+        Llvm.IR ir = new Llvm.IR(Llvm.empty(), Llvm.empty());
+
+        if (Program.symbolTable == null) {
+            Program.symbolTable = new SymbolTable();
+        } else {
+            Program.symbolTable = new SymbolTable(Program.symbolTable);
+        }
+
+        idents.forEach(ident -> {
+            Program.symbolTable.add(new VariableSymbol(type, ident));
+            ir.appendCode(new Llvm.Alloca(type.toLlvmType(), ident));
+        });
+
+        return ir;
     }
 }

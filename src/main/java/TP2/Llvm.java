@@ -40,12 +40,12 @@ public class Llvm {
       // This header describe to LLVM the target
       // and declare the external function printf
       StringBuilder r = new StringBuilder("; Target\n" +
-        "target triple = \"x86_64-unknown-linux-gnu\"\n" +
-        "; External declaration of the printf function\n" +
-        "declare i32 @printf(i8* noalias nocapture, ...)\n" +
-        "\n; Actual code begins\n\n");
+              "target triple = \"x86_64-unknown-linux-gnu\"\n" +
+              "; External declaration of the printf function\n" +
+              "declare i32 @printf(i8* noalias nocapture, ...)\n" +
+              "\n; Actual code begins\n\n");
 
-      for(Instruction inst: header)
+      for (Instruction inst : header)
         r.append(inst);
 
       r.append("\n\n");
@@ -55,8 +55,11 @@ public class Llvm {
       r.append("define i32 @main() {\n");
 
 
-      for(Instruction inst: code)
+      for (Instruction inst : code)
+      {
+        r.append('\t');
         r.append(inst);
+      }
 
       // TODO : remove this when you extend the language
       r.append("}\n");
@@ -155,6 +158,7 @@ public class Llvm {
     }
   }
 
+
   static public class Div extends Instruction {
     Type type;
     String left;
@@ -185,6 +189,21 @@ public class Llvm {
     }
 
     public String toString() { return "store " + type + " " + value + ", " + type + "* " + var + "\n"; }
+  }
+
+  static public class Alloca extends Instruction {
+    Type type;
+    String var;
+
+    public Alloca(Type type, String var) {
+      this.type = type;
+      this.var = var;
+    }
+
+    @Override
+    public String toString() {
+      return "%" + var + "= alloca " + type + "\n";
+    }
   }
 
   // TODO : other instructions

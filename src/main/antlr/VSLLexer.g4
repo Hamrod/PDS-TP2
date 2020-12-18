@@ -33,8 +33,11 @@ RETURN : 'RETURN';
 LP : '('; //Left parenthesis
 RP : ')';
 
-LB : '{'; //Left curly-bracket
-RB : '}';
+LC : '{'; //Left curly-bracket
+RC : '}';
+
+LB : '[';
+RB : ']';
 
 V : ',';
 

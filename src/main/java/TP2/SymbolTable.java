@@ -23,7 +23,7 @@ public class SymbolTable {
   public static class VariableSymbol extends Symbol {
     Type type;
 
-    VariableSymbol(Type type, String ident) {
+    public VariableSymbol(Type type, String ident) {
       this.type = type;
       this.ident = ident;
     }
@@ -44,7 +44,7 @@ public class SymbolTable {
     List<VariableSymbol> arguments; // arguments is an ordered list of VariableSymbol
     boolean defined; // false if declared but not defined
 
-    FunctionSymbol(Type returnType, String ident, List<VariableSymbol> arguments, boolean defined) {
+    public FunctionSymbol(Type returnType, String ident, List<VariableSymbol> arguments, boolean defined) {
       this.returnType = returnType;
       this.ident = ident;
       this.arguments = arguments;
@@ -114,6 +114,15 @@ public class SymbolTable {
       return variableSymbol.type;
     } else {
       return null;
+    }
+  }
+
+  public void toParent() {
+    if (parent != null) {
+      this.table = parent.table;
+      this.parent = parent.parent;
+    } else {
+      this.table = new HashMap<>();
     }
   }
 

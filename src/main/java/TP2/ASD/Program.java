@@ -13,16 +13,15 @@ public class Program {
 
     public Program(List<Instruction> i) {
         this.instructions = i;
-        symbolTable = new SymbolTable();
     }
 
     // Pretty-printer
     public String pp() {
-        String s  = "";
+        StringBuilder s  = new StringBuilder();
         for (Instruction instruction : instructions) {
-            s += instruction.pp();
+            s.append(instruction.pp());
         }
-        return s;
+        return s.toString();
     }
 
     // IR generation

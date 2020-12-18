@@ -21,19 +21,19 @@ instruction returns [TP2.ASD.Instruction out]
     ;
 
 block returns [List<TP2.ASD.Instruction> out]
-    : { $out = new ArrayList<TP2.ASD.Instruction>(); } LB declaration? (i=instruction { $out.add($i.out); })+ RB
+    : { $out = new ArrayList<TP2.ASD.Instruction>(); } LC (d=declaration { $out.add($d.out); })? (i=instruction { $out.add($i.out); })+ RC {$out.add(new TP2.ASD.EndOfBlock());}
     ;
 
 function
-    : FUNC type IDENT LP RP RB block LB
+    : FUNC type IDENT LP RP block
     ;
 
 affectation returns [TP2.ASD.Affectation out]
     : v=IDENT AFFECT r=expression { $out = new TP2.ASD.Affectation($v.getText(), $r.out); }
     ;
 
-declaration returns [TP2.ASD.Declaration out]
-    : INT IDENT (V IDENT)+
+declaration returns [TP2.ASD.Declaration out] locals [ArrayList<String> idents]
+    : { $idents = new ArrayList<String>(); } INT v=IDENT { $idents.add($v.getText()); } (V v=IDENT { $idents.add($v.getText()); })* { $out = new TP2.ASD.Declaration(new TP2.ASD.Int(), $idents); }
     ;
 
 type

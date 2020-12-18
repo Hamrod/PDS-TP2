@@ -20,6 +20,7 @@ public class Main {
         //input = CharStreams.fromStream(System.in);
         input = CharStreams.fromString("" +
                 "{\n" +
+                  "INT i, j\n" +
                   "i:=5+7+1-8\n" +
                   "j:=5+7+1-8\n" +
                 "}");
