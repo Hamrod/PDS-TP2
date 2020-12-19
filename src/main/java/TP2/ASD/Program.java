@@ -17,11 +17,13 @@ public class Program {
 
     // Pretty-printer
     public String pp() {
-        StringBuilder s  = new StringBuilder();
+        String s  = "{\n";
         for (Instruction instruction : instructions) {
-            s.append(instruction.pp()).append('\n');
+            if (!(instruction instanceof EndOfBlock)) {
+                s += '\t' + instruction.pp() + '\n';
+            }
         }
-        return s.toString();
+        return s + "}";
     }
 
     // IR generation

@@ -85,6 +85,12 @@ public class Llvm {
     }
   }
 
+  static public class Void extends Type {
+    public String toString() {
+      return "void";
+    }
+  }
+
   // LLVM IR Instructions
   static public abstract class Instruction {
     public abstract String toString();

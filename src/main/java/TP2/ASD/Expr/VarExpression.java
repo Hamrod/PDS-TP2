@@ -18,7 +18,7 @@ public class VarExpression extends Expression {
 
     @Override
     public String pp() {
-        return "";
+        return ident;
     }
 
     @Override

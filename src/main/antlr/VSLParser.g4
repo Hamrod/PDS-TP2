@@ -18,12 +18,12 @@ program returns [TP2.ASD.Program out]
 
 instruction returns [TP2.ASD.Instruction out]
     : a=affectation { $out = $a.out; }
-    | w=while { $out = $w.out; }
-    | r=return {$out = $r.out; }
+    | w=whil { $out = $w.out; }
+    | r=ret {$out = $r.out; }
     ;
 
-return returns [TP2.ASD.Instruction out]
-    : RETURN e=expression {$out = new TP2.ASD.Return(e)}
+ret returns [TP2.ASD.Instruction out]
+    : RETURN e=expression { $out = new TP2.ASD.Return($e.out); }
     ;
 
 block returns [List<TP2.ASD.Instruction> out]
@@ -34,8 +34,8 @@ function
     : FUNC type IDENT LP RP block
     ;
 
-while returns [TP2.ASD.Instruction out]
-    : WHILE cond=expression DO b=block DONE { $out = new TP2.ASD.While(cond, b) }
+whil returns [TP2.ASD.Instruction out]
+    : WHILE cond=expression DO b=block DONE { $out = new TP2.ASD.While($cond.out, $b.out); }
     ;
 
 affectation returns [TP2.ASD.Affectation out]

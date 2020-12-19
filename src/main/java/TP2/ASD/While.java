@@ -20,11 +20,14 @@ public class While extends Instruction {
 
     @Override
     public String pp() {
-        String s = "WHILE " + condition.pp() + " DO\n";
+        String s = "WHILE " + condition.pp() + "\n\tDO\n\t{\n";
         for (Instruction instruction : block) {
-            s += instruction.pp() + "\n";
+            if (!(instruction instanceof EndOfBlock)) {
+                s += "\t\t" + instruction.pp() + "\n";
+            }
         }
-        return s + "DONE";
+        s += "\t}\n\tDONE";
+        return s;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class While extends Instruction {
         });
         ir.appendCode(new BrLabel(whileLabel));
 
-        ir.appendCode(new BrLabel(doneLabel));
+        ir.appendCode(new Label(doneLabel));
         return ir;
     }
 }
