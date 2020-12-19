@@ -18,8 +18,9 @@ program returns [TP2.ASD.Program out]
 
 instruction returns [TP2.ASD.Instruction out]
     : a=affectation { $out = $a.out; }
-    | w=whil { $out = $w.out; }
-    | r=ret {$out = $r.out; }
+    | w=whileDo { $out = $w.out; }
+    | i=ifThen { $out = $i.out; }
+    | r=ret { $out = $r.out; }
     ;
 
 ret returns [TP2.ASD.Instruction out]
@@ -34,8 +35,12 @@ function
     : FUNC type IDENT LP RP block
     ;
 
-whil returns [TP2.ASD.Instruction out]
+whileDo returns [TP2.ASD.Instruction out]
     : WHILE cond=expression DO b=block DONE { $out = new TP2.ASD.While($cond.out, $b.out); }
+    ;
+
+ifThen returns [TP2.ASD.Instruction out]
+    : IF cond=expression THEN b=block ELSE b2=block FI { $out = new TP2.ASD.If($cond.out, $b.out, $b2.out); }
     ;
 
 affectation returns [TP2.ASD.Affectation out]
