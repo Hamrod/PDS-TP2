@@ -11,22 +11,18 @@ import java.util.List;
 public class While extends Instruction {
 
     Expression condition;
-    List<Instruction> block;
+    Instruction block;
 
-    public While(Expression condition, List<Instruction> block) {
+    public While(Expression condition, Instruction block) {
         this.condition = condition;
         this.block = block;
     }
 
     @Override
     public String pp() {
-        String s = "WHILE " + condition.pp() + "\n\tDO\n\t{\n";
-        for (Instruction instruction : block) {
-            if (!(instruction instanceof EndOfBlock)) {
-                s += "\t\t" + instruction.pp() + "\n";
-            }
-        }
-        s += "\t}\n\tDONE";
+        String s = "WHILE " + condition.pp() + "\n\tDO\n";
+        s += "\t" + block.pp() + "\n";
+        s += "\tDONE";
         return s;
     }
 
@@ -46,13 +42,7 @@ public class While extends Instruction {
         ir.append(condRet.ir);
 
         ir.appendCode(new Label(doLabel));
-        block.forEach(instruction -> {
-            try {
-                ir.append(instruction.toIR());
-            } catch (TypeException e) {
-                e.printStackTrace();
-            }
-        });
+        ir.append(block.toIR());
         ir.appendCode(new BrLabel(whileLabel));
 
         ir.appendCode(new Label(doneLabel));

@@ -1,0 +1,18 @@
+{
+    INT i, j
+    i := 1
+    WHILE i
+    DO
+    {
+        j:=5+7+1-8+i
+        IF j THEN i:=i-1 FI
+    }
+    DONE
+    IF i THEN j:=5
+    ELSE
+    {
+        i:=6+8
+        i:=0
+    }
+    FI
+}

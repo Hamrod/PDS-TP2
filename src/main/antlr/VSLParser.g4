@@ -27,8 +27,9 @@ ret returns [TP2.ASD.Instruction out]
     : RETURN e=expression { $out = new TP2.ASD.Return($e.out); }
     ;
 
-block returns [List<TP2.ASD.Instruction> out]
-    : { $out = new ArrayList<TP2.ASD.Instruction>(); } LC (d=declaration { $out.add($d.out); })? (i=instruction { $out.add($i.out); })+ RC {$out.add(new TP2.ASD.EndOfBlock());}
+block returns [TP2.ASD.Instruction out] locals [List<TP2.ASD.Instruction> list]
+    : { $list = new ArrayList<TP2.ASD.Instruction>(); } LC (d=declaration { $list.add($d.out); })? (i=instruction { $list.add($i.out); })+ RC {$out = new TP2.ASD.Block($list);}
+    | i=instruction {$out = $i.out;}
     ;
 
 function
@@ -41,6 +42,7 @@ whileDo returns [TP2.ASD.Instruction out]
 
 ifThen returns [TP2.ASD.Instruction out]
     : IF cond=expression THEN b=block ELSE b2=block FI { $out = new TP2.ASD.If($cond.out, $b.out, $b2.out); }
+    | IF cond=expression THEN b=block FI { $out = new TP2.ASD.If($cond.out, $b.out); }
     ;
 
 affectation returns [TP2.ASD.Affectation out]

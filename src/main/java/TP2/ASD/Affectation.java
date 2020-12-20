@@ -31,7 +31,7 @@ public class Affectation extends Instruction {
         Symbol var = Program.symbolTable.lookup(ident);
 
         if(var == null) {
-            throw new TypeException("You must initialised variable " + ident + " before using it !");
+            throw new TypeException("You must declare variable " + ident + " before using it !");
         }
 
         Type identType = Program.symbolTable.getType((VariableSymbol) var);

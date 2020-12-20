@@ -18,19 +18,7 @@ public class Main {
       if(args.length == 0) {
         // From standard input
         //input = CharStreams.fromStream(System.in);
-        input = CharStreams.fromString("" +
-                "{\n" +
-                  "INT i, j\n" +
-                  "i := 1\n" +
-                  "WHILE i\n" +
-                  "DO \n" +
-                  "{\n"+
-                    "j:=5+7+1-8+i\n" +
-                    "i:=i-1\n" +
-                  "}\n"+
-                  "DONE\n" +
-                "}");
-        //input = CharStreams.fromPath(Paths.get("tests\\Perso\\add.vsl"));
+        input = CharStreams.fromPath(Paths.get("tests\\Perso\\ifWhile.vsl"));
       }
       else {
         // From file set in first argument

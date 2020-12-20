@@ -34,12 +34,6 @@ public class Declaration extends Instruction {
 
         IR ir = new IR(Llvm.empty(), Llvm.empty());
 
-        if (Program.symbolTable == null) {
-            Program.symbolTable = new SymbolTable();
-        } else {
-            Program.symbolTable = new SymbolTable(Program.symbolTable);
-        }
-
         idents.forEach(ident -> {
             Program.symbolTable.add(new VariableSymbol(type, ident));
             ir.appendCode(new Alloca(type.toLlvmType(), ident));

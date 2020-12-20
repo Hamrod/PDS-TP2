@@ -9,29 +9,19 @@ import java.util.List;
 
 public class Program {
     public static SymbolTable symbolTable;
-    List<Instruction> instructions;
+    Instruction block;
 
-    public Program(List<Instruction> i) {
-        this.instructions = i;
+    public Program(Instruction block) {
+        this.block = block;
     }
 
     // Pretty-printer
     public String pp() {
-        String s  = "{\n";
-        for (Instruction instruction : instructions) {
-            if (!(instruction instanceof EndOfBlock)) {
-                s += '\t' + instruction.pp() + '\n';
-            }
-        }
-        return s + "}";
+        return block.pp();
     }
 
     // IR generation
     public IR toIR() throws TypeException {
-        IR ir = new IR(Llvm.empty(), Llvm.empty());
-        for (Instruction instruction : instructions) {
-            ir.append(instruction.toIR());
-        }
-        return ir;
+        return block.toIR();
     }
   }
