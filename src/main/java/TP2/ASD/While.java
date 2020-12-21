@@ -5,6 +5,7 @@ import TP2.ASD.Expr.Expression;
 import TP2.Llvm;
 import TP2.Llvm.*;
 import TP2.TypeException;
+import TP2.Utils;
 
 import java.util.List;
 
@@ -31,13 +32,13 @@ public class While extends Instruction {
 
         IR ir = new IR(Llvm.empty(), Llvm.empty());
 
-        String whileLabel = "while" + ++Label.number;
+        String whileLabel = Utils.newlab("while");
         ir.appendCode(new BrLabel(whileLabel));
 
         ir.appendCode(new Label(whileLabel));
         RetExpression condRet = condition.toIR();
-        String doLabel = "do" + ++Label.number;
-        String doneLabel = "done" + ++Label.number;
+        String doLabel = Utils.newlab("do");
+        String doneLabel = Utils.newlab("done");
         condRet.ir.appendCode(new BrIf(condRet.result, doLabel, doneLabel));
         ir.append(condRet.ir);
 

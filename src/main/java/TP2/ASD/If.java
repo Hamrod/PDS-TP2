@@ -4,6 +4,7 @@ import TP2.ASD.Expr.Expression;
 import TP2.Llvm;
 import TP2.Llvm.*;
 import TP2.TypeException;
+import TP2.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +43,17 @@ public class If extends Instruction {
     public Llvm.IR toIR() throws TypeException {
         Llvm.IR ir = new Llvm.IR(Llvm.empty(), Llvm.empty());
 
-        String thenLabel = "then" + ++Label.number;
+        String thenLabel = Utils.newlab("then");
         String elseLabel = "";
         String fiLabel = "";
 
         Expression.RetExpression condRet = condition.toIR();
         if (elseBlock != null) {
-            elseLabel = "else" + ++Label.number;
+            elseLabel = Utils.newlab("else");
             condRet.ir.appendCode(new BrIf(condRet.result, thenLabel, elseLabel));
-            fiLabel = "fi" + ++Label.number;
+            fiLabel = Utils.newlab("fi");
         } else {
-            fiLabel = "fi" + ++Label.number;
+            fiLabel = Utils.newlab("fi");
             condRet.ir.appendCode(new BrIf(condRet.result, thenLabel, fiLabel));
         }
         ir.append(condRet.ir);

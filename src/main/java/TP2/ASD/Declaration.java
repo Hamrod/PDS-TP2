@@ -4,6 +4,7 @@ import TP2.Llvm;
 import TP2.Llvm.*;
 import TP2.SymbolTable;
 import TP2.TypeException;
+import TP2.Utils;
 
 import java.util.List;
 
@@ -34,10 +35,13 @@ public class Declaration extends Instruction {
 
         IR ir = new IR(Llvm.empty(), Llvm.empty());
 
-        idents.forEach(ident -> {
+        String uniqueIdent;
+
+        for (String ident : idents) {
+            uniqueIdent = Utils.newVar(ident);
             Program.symbolTable.add(new VariableSymbol(type, ident));
-            ir.appendCode(new Alloca(type.toLlvmType(), ident));
-        });
+            ir.appendCode(new Alloca(type.toLlvmType(), uniqueIdent));
+        }
 
         return ir;
     }

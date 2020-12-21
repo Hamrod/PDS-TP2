@@ -4,6 +4,7 @@ import TP2.Llvm;
 import TP2.Llvm.*;
 import TP2.SymbolTable;
 import TP2.TypeException;
+import TP2.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,10 @@ import java.util.List;
 public class Block extends Instruction {
 
     List<Instruction> instructionList;
+
+    public List<Instruction> getInstructionList() {
+        return instructionList;
+    }
 
     public Block(List<Instruction> instructionList) {
         this.instructionList = instructionList;
@@ -33,17 +38,13 @@ public class Block extends Instruction {
     public IR toIR() throws TypeException {
         IR ir = new IR(Llvm.empty(), Llvm.empty());
 
-        if (Program.symbolTable == null) {
-            Program.symbolTable = new SymbolTable();
-        } else {
-            Program.symbolTable = new SymbolTable(Program.symbolTable);
-        }
+        Utils.addBlock();
 
         for (Instruction instruction : instructionList) {
             ir.append(instruction.toIR());
         }
 
-        TP2.ASD.Program.symbolTable.toParent();
+        Utils.removeBlock();
 
         return ir;
     }

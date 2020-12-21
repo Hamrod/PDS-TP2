@@ -11,6 +11,10 @@ public class Llvm {
     List<Instruction> header; // IR instructions to be placed before the code (global definitions)
     List<Instruction> code;   // main code
 
+    public List<Instruction> getCode() {
+      return code;
+    }
+
     public IR(List<Instruction> header, List<Instruction> code) {
       this.header = header;
       this.code = code;
@@ -51,18 +55,12 @@ public class Llvm {
       r.append("\n\n");
 
       // We create the function main
-      // TODO : remove this when you extend the language
-      r.append("define i32 @main() {\n");
 
 
       for (Instruction inst : code)
       {
-        r.append('\t');
         r.append(inst);
       }
-
-      // TODO : remove this when you extend the language
-      r.append("}\n");
 
       return r.toString();
     }
@@ -124,7 +122,11 @@ public class Llvm {
     }
 
     public String toString() {
-      return "ret " + type + " " + value + "\n";
+      if (type instanceof Int) {
+        return "ret " + type + " " + value + "\n";
+      } else {
+        return "ret " + type + "\n";
+      }
     }
   }
 
@@ -260,7 +262,6 @@ public class Llvm {
   }
 
   static public class Label extends Instruction {
-    static public int number = 0;
 
     String name;
 
@@ -274,7 +275,82 @@ public class Llvm {
     }
   }
 
+  static public class Argument {
+    Type type;
+    String name;
 
+    public Argument(Type type, String name) {
+      this.type = type;
+      this.name = name;
+    }
 
-  // TODO : other instructions
+    @Override
+    public String toString() {
+      return type + " " + name;
+    }
+  }
+
+  static public class Function extends Instruction {
+
+    String name;
+    Type type;
+    List<Argument> arguments;
+    List<Instruction> block;
+
+    public Function(String name, Type type, List<Argument> arguments, List<Instruction> block) {
+      this.name = name;
+      this.type = type;
+      this.arguments = arguments;
+      this.block = block;
+    }
+
+    @Override
+    public String toString() {
+      String s = "define " + type + " @" + name + "(";
+      if (arguments.size() > 0) {
+        for (Argument argument : arguments) {
+          s += argument + ", ";
+        }
+        s = s.substring(0, s.length() - 2);
+      }
+
+      s += ") {\n";
+
+      block.add(new Return(type, "0"));
+
+      for (Instruction instruction : block) {
+        s += "\t" + instruction;
+      }
+
+      return s + "}";
+    }
+  }
+
+  static public class Call extends Instruction {
+
+    Type type;
+    String name;
+    List<Argument> arguments;
+    String lvalue;
+
+    public Call(Type type, String name, List<Argument> arguments, String lvalue) {
+      this.type = type;
+      this.name = name;
+      this.arguments = arguments;
+      this.lvalue = lvalue;
+    }
+
+    @Override
+    public String toString() {
+      String s = lvalue + " = call " + type + " @" + name + "(";
+      if (arguments.size() > 0) {
+        for (Argument argument : arguments) {
+          s += argument + ", ";
+        }
+        s = s.substring(0, s.length()-2);
+      }
+      return s + ")\n";
+    }
+  }
+
 }

@@ -1,5 +1,7 @@
 package TP2;
 
+import TP2.ASD.Program;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -7,6 +9,7 @@ public class Utils {
   private static int tmp = 0;
   private static int lab = 0;
   private static int glob = 0;
+  private static int var = 0;
   private final static Pattern re = Pattern.compile("\\\\n");
 
   // return "  " × level, useful for code indentation
@@ -33,6 +36,20 @@ public class Utils {
   public static String newglob(String str) {
     glob++;
     return str + glob;
+  }
+
+  public static String newVar(String str) {
+    return str + var;
+  }
+
+  public static void addBlock() {
+    var++;
+    Program.symbolTable = new SymbolTable(Program.symbolTable);
+  }
+
+  public static void removeBlock() {
+    var--;
+    Program.symbolTable.toParent();
   }
 
   // transform escaped newlines ('\' 'n') into newline form suitable for LLVM

@@ -1,8 +1,10 @@
 package TP2.ASD.Expr;
 
 import TP2.ASD.Int;
+import TP2.ASD.Program;
 import TP2.ASD.Type;
 import TP2.Llvm;
+import TP2.SymbolTable;
 import TP2.TypeException;
 import TP2.Utils;
 
@@ -23,6 +25,12 @@ public class VarExpression extends Expression {
 
     @Override
     public RetExpression toIR() throws TypeException {
+
+        SymbolTable.Symbol var = Program.symbolTable.lookup(ident);
+
+        if(var == null) {
+            throw new TypeException("You must declare variable " + ident + " before using it !");
+        }
 
         String result = Utils.newtmp();
 
